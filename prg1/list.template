@@ -1,0 +1,118 @@
+/* Samantha Rack
+ * CSE 30331 Program 1
+ * list.template
+ * The functions written in this file are the implementation of a templated 
+ * list.  In writing this code, I used DATA STRUCTURES and Other Objects Using
+ * C++ as a reference.
+ */
+
+
+#include <assert.h>
+
+template <class T>
+List<T>::List() {
+//default constructor for list
+//post-condition: list has no nodes
+
+	head_ptr = NULL;
+}
+
+template <class T>
+List<T>::~List() {
+//destructor -- frees allocated memory by calling clear()
+	clear();
+}
+
+template <class T>
+bool List<T>::is_empty() const {
+//returns true if the list contains no elements
+//this is determined by testing if the head_ptr data member points to anything
+
+	if(head_ptr == NULL) return true;
+	return false;
+}
+
+template <class T>
+void List<T>::insert_node(Node<T> *prev_node, T _data) {
+/*pre-condition: prev_ptr points to the node BEFORE the new node will be inserted
+		 prev_ptr does NOT equal NULL (can't be the last node's next) */
+//post-condition: a new node containing _data will exist after the node prev_node points to
+//this function can not be used to insert at the head of the list, use insert_head
+
+	if (prev_node == NULL) return;
+	Node<T> *inserted_node = new Node<T>(_data);
+	inserted_node->next = prev_node->next;
+	prev_node->next = inserted_node;	
+}
+
+template <class T>
+void List<T>::insert_head(T _data) {
+//post-condition: a new node is created and put at the head of the list
+
+	Node<T> *inserted_node = new Node<T>(_data);	//create new node containing _data
+	inserted_node->next = head_ptr;		//new node points where head_ptr points
+	head_ptr = inserted_node;		//head_ptr points at new node
+}	
+
+template <class T>
+void List<T>::delete_head() {
+//removes the first element of the list, moving head_ptr to point at the next node
+//if the list is empty, then the function immediately returns
+
+	if (is_empty()) return;		//empty list check
+	
+	Node<T> *first_node = head_ptr;	//pointer to the node that will be deleted
+	head_ptr = head_ptr->next;	//move head_ptr to point at the second node
+	delete first_node;		//deallocate the memory
+}
+
+template <class T>
+void List<T>::delete_node(Node<T> *prev_node) {
+/*pre-condition: prev_ptr points to the node BEFORE the node that will be deleted
+		 prev_ptr does NOT equal NULL
+		 prev_ptr cannot point to the last element of the list (will not delete anything)*/
+
+	//if prev_node is NULL, the function returns without removing any nodes
+	if (prev_node == NULL) return;
+
+	Node<T> *target_node = prev_node->next;
+	if (target_node == NULL) return;
+	
+	prev_node->next = target_node->next;	//move prev_node to point to the next element
+	delete target_node;		//deallocate the memory
+
+}
+
+template <class T>
+void List<T>::clear() {
+//removes all nodes from the list
+//post-condition: head_ptr will point to NULL, and there will be no remaining nodes
+
+	while (!is_empty()) {
+		delete_head();
+	}
+}
+
+template <class T>
+T List<T>::get_value(Node<T> *nodeOfInterest) const {
+//returns the 'data' found in the node to which nodeOfInterest points
+//pre-condition: nodeOfInterest is not NULL, assert will verify this
+	
+	assert(nodeOfInterest != NULL);
+
+	return nodeOfInterest->data;	
+}
+
+template <class T>
+T List<T>::get_head_value() const {
+//returns the 'data' found in the first node of the list
+//pre-condition: the list is not empty, assert will verify this
+	
+	assert(!is_empty());
+	
+	return head_ptr->data;
+}
+
+
+
+

@@ -1,0 +1,9 @@
+Samantha Rack
+CSE 30331
+Program 2
+
+The index operator of the partially implemented map class simply calls a recursive function, findOrInsertKey with the pointer to the root (private data member) and the argument to the operator.  findOrInsertKey() calls itself recursively, following the insertion rules of a BST until either it reaches a leaf or it finds the key.  If it reaches a leaf, it inserts a new node with the value of the key and the default value of value.  If it finds the key in the tree, it simply returns a references to that key's value.
+
+The priority queue is implemented as a heap, with the data being stored in a vector. The push() function is implemented using reheapification upwards, and the pop() function is implemented using reheapification downwards.  The nondefault constructor first pushes all elements into the underlying vector using the iterators.  Then it finds the parent of the last child.  From  here, it enters a for loop, performing reheapification downwards (as with pop()) on each of the nodes, starting with the highest index and moving to the root.
+
+cosine.cxx is implemented using much of the same code/logic as topwords.cxx.  It fills a map and then moves the data to a priority queue.  However, the priority is based on the words instead of frequencies (reverse alphabetical order).  Elements are popped off (and the sums for calculating for cosine is update)  as the elements are equal to or greater than the top words of the priority queue of the other file.

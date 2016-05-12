@@ -1,0 +1,55 @@
+/* Samantha Rack
+ * CSE 30331 Program 1
+ * stack.template
+ * This class contains the implementation of the member functions of the 
+ * templated stack class.  The stack is built on the List class, and is a
+ * container adaptor.  Its member functions for adding and removing data 
+ * are limited to push and pop.
+ */
+
+template <class T>
+stack<T>::stack() { 
+// Precondition: None.
+// Postcondition: The stack is empty.
+	
+	//empty body
+	//default constructor of list is run to initialize it to empty
+}
+
+template <class T>
+bool stack<T>::empty() const {
+// Test whether the stack is empty.
+// Precondition: None.
+// Postcondition: Returns true if and only if the stack is empty.
+
+	return list.is_empty();
+}
+
+template <class T>
+void stack<T>::push(T x) { 
+// Push an element onto the stack.
+// Precondition: None.
+// Postcondition: The element x is added to the top of the stack.
+	list.insert_head(x);
+}
+
+template <class T>
+void stack<T>::pop() { 
+// Pop an element off the stack.
+// Precondition: The stack is not empty.
+// Postcondition: The top element is removed from the stack.
+	if (empty()) throw std::runtime_error("stack underflow");
+	list.delete_head();
+	 
+}
+
+template <class T>
+T stack<T>::top() const { 
+// Return the top element on the stack
+// Precondition: The stack is not empty.
+// Postcondition: The stack is unchanged, and the top element is returned.
+	if (empty()) throw std::runtime_error("stack underflow"); 
+	
+	return list.get_head_value();
+
+}

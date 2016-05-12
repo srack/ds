@@ -1,0 +1,38 @@
+Samantha Rack
+CSE 30331
+Program 3
+README
+
+Graph Diameters:
+	netsense.txt = 7
+	snap.txt = 8
+
+
+Method for dijkstra1:  The method implemented for in dijkstra1.cpp required very little additional code.  This method allows the priority queue in the algorithm, unvisisted, to have multiple copies with different distances calculated for a given vertex.  As vertices are popped off the priority queue, there is a conditional that checks if the vertex being popped is already visited, and if so, it simply continues to the next shortest distance vertex.  This algorithm is able to work because it is guaranteed that the vertex being popped from the priority queue has already found its shortest distance to the origin.  So, the pair with the shortest distance for a given vertex (when there are duplicates as this method uses) is guaranteed to be popped off the priority queue first.
+
+Theoretical Big-O for dijkstra1 -- dijkstra() function:
+	File d1bigO.txt in this directory shows detailed work with pseudocode that leads to this conclusion.
+	O(n^3((logn)^2 + logn + 1) + n^2(logn + 1) + n((logn)^2 + 1) + 1)
+	O(n^3*(logn)^2)	//greatest term only
+
+Seconds to Run dijkstra1 on local machine:
+	(on the command line using: time ./dijkstra1 <filename>)
+	netsense.txt = 0.04s	(with 750 lines of relationships)
+	snap.txt = 79.66s	(with 88234 lines)
+
+
+Method for dijkstra2:  The method implemented in dijkstra2.cpp replaced the priority queue used in the first implementation with a std::set data structure. I chose this data structure because it allows for deletion of nodes and because it is a balanced binary search tree (implemented in the STL as a red-black tree).  To find the next closest vertex (ie. the one that would next be removed from unvisited) at each iteration, I used the begin() iterator which points at the smallest element (the iterator for a set does an in order traversal of the tree).  The label of this vertex is retrieved, and then it is removed from the tree. Then, each of the vertex's neighbors' distances are updated if necessary.  On the need for an update, the neighbor's node in the tree is found and removed using the set member function erase, the distance is updated, and a pair with the new distance is inserted in the tree.
+
+Theoretical Big-O for dijkstra2 -- dijkstra() function: 
+	File d2bigO.txt in this directory shows detailed work with pseudocode that leads to this conclusion.
+	O(n^2*logn + n((logn)^2 + logn + 1) + 1)
+	O(n^2*logn)	//greatest term only
+	 
+
+Seconds to Run dijkstra2 on local machine:
+	(on the command line using: time ./dijkstra2 <filename>)
+	netsense.txt = .03s	(with 750 lines)
+	snap.txt = 64.25s	(with 88234 lines)
+
+
+

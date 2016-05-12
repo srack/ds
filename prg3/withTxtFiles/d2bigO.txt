@@ -1,0 +1,44 @@
+graph g has: n vertices, m edges
+
+int dijkstra(graph g, int u) {
+
+	//initialization
+	n = num_vertices(g);						//constant time, calls vector<T>.size			1
+	initialize vectors for distance and visited			
+	//priority queue fill in					
+	set unvisited;							
+	for (int i = 0; i < n; ++i) 					//n times						n*logn
+		unvisited.insert(make_pair(distance[i], i));		//logn for each push						logn
+
+	while (unvisited.size() > 0) {					//n times through while loop, n vertices		n
+									// in the set to begin, one erased each 
+									// time through
+		u = (*(unvisited.begin())).second;			//constant							
+		unvisited.erase(unvisited.begin());			//logn for set with n entries					logn
+
+		pair<it, it> p = adjacent_vertices(u, g);		//constant time -- uses begin() and end()			1
+									// in order iteration of a std<set>
+
+		for (it = p.first; it != .second; ++it) {		//number of edges the node, u, has: worst case			n
+									// fully connected, so n iterations
+			int v = *it;
+			if (v has not yet been visited) {
+				if (distance can be minimized more) {
+					search for v in the set		//logn worst case							logn
+					delete node with v		//logn									logn
+					insert node with updated dist.	//logn									logn
+				
+				}
+			}	
+		}
+	}
+	return max in distance vector;					//assume a worst case serial search, n vertices in	n 
+									// distance vector	
+
+}
+
+1 + nlogn(logn) + n(logn + 1 + n(logn)) + n
+1 + n*(logn)^2 + n*logn + n + n^2*logn
+
+O(n^2*logn + n((logn)^2 + logn + 1) + 1)
+O(n^2*logn)

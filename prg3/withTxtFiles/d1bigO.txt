@@ -1,0 +1,48 @@
+graph g has: n vertices, m edges
+
+int dijkstra(graph g, int u) {
+
+	//initialization
+	n = num_vertices(g);						//constant time, calls vector<T>.size			1
+	initialize vectors for distance and visited			
+	//priority queue fill in					
+	pq unvisited;							
+	for (int i = 0; i < n; ++i) 					//n times						n*logn
+		unvisited.push(make_pair(-distance[i], i));		//logn for each push						logn
+
+	//main while loop
+	while (!unvisited.empty()) {					//n^2 times through while loop, worst case		n*n
+									// the graph is fully connected and we add
+									// each of n vertices to the pq n times
+		//get the top vertex, then pop it
+		u = unvisited.top().second;				//constant time							1
+		unvisited.pop();					//log(n^2) time = 2logn = O(logn)-- log(number of 		logn
+									// items in unvisited)
+
+		//check if this vertex is a duplicate
+		if (visited[u]) continue;				
+	
+		pair<it, it> p = adjacent_vertices(u, g);		//constant time -- uses begin() and end() values of 		1
+									// in order iteration of a std<set>
+
+		for (it = p.first; it != p.second; ++it) {		//number of edges the node, u, has: worst case is		n
+									// fully connected, so n iterations of the for loop		n*logn
+			int v = *it;
+			if (v has not yet been visited) {
+				if (distance can be minimized more) {	
+					update the distance;											1
+					push into unvisited;		// log(n^2) time = O(logn)						logn
+				}
+			}
+		}
+	}
+	return max in distance vector;					//assume a worst case serial search, n vertices in	n 
+									// distance vector	
+}
+
+1 + n*logn(logn) + n*n(1 + logn + n + n*logn(1 + logn)) + n
+n*(logn)^2 + n^2(1 + logn + n + n*logn + n*(logn)^2) + n + 1
+n(logn)^2 + n^2 + n^2(logn) + n^3 + n^3*(logn) + n^3(logn)^2 + n + 1
+
+O(n^3((logn)^2 + logn + 1) + n^2(logn + 1) + n((logn)^2 + 1) + 1)
+O(n^3*(logn)^2) 
